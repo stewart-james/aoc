@@ -35,14 +35,16 @@ namespace AoC.CSharp._2021
             return false;
         }
 
-        private void CallNumber(int n, int[] board)
+        private int[] CallNumber(int n, int[] board)
         {
             for(int i = 0; i < board.Length; ++i)
                 if (board[i] == n)
                     board[i] = -Math.Abs(n);
+
+            return board;
         }
 
-        private int UnmarkedSun(int[] board)
+        private int UnmarkedSum(int[] board)
         {
             int sum = 0;
             for(int i = 0; i < board.Length; ++i)
@@ -53,38 +55,31 @@ namespace AoC.CSharp._2021
         }
 
         IEnumerable<int> CalculateScores(List<int> calledNumbers, List<int[]> boards) =>
-            calledNumbers.Select(n => boards.Select(b =>
-            {
-                if (!HasWon(b))
-                {
-                    CallNumber(n, b);
-
-                    if (HasWon(b))
-                        return UnmarkedSun(b) * n;
-                }
-
-                return 0;
-            })).SelectMany(scores => scores.Where(n => n > 0));
-
-        IEnumerable<int> CalculateScores(string input)
-        {
-            var calledNumbers =
-                input.Substring(0, input.IndexOf('\n')).Split(",").Select(int.Parse).ToList();
-            
-            List<int[]> boards = Parse(input.Substring(input.IndexOf('\n')));
-
-            return CalculateScores(calledNumbers, boards);
-        }
+            calledNumbers.Select(n => boards
+                    .Where(b => !HasWon(b))
+                    .Select(b => CallNumber(n, b))
+                    .Where(b => HasWon(b))
+                    .Select(b => UnmarkedSum(b) * n))
+                .SelectMany(_ => _);
 
         public string SolvePart1(string input)
-            => CalculateScores(input).First().ToString();
+            => CalculateScores(ParseNumbers(input), ParseBoards(input))
+                .First()
+                .ToString();
 
         public string SolvePart2(string input)
-            => CalculateScores(input).Last().ToString();
+            => CalculateScores(ParseNumbers(input), ParseBoards(input))
+                .Last()
+                .ToString();
         
-        private static List<int[]> Parse(string input)
+        private static List<int> ParseNumbers(string input) =>
+                input.Substring(0, input.IndexOf('\n')).Split(",")
+                    .Select(int.Parse)
+                    .ToList();
+        
+        private static List<int[]> ParseBoards(string input)
         {
-            return input
+            return input.Substring(input.IndexOf('\n'))
                 .Split("\n\n", StringSplitOptions.RemoveEmptyEntries)
                 .Select(s => s
                     .Replace("\n", " ")
