@@ -44,22 +44,12 @@ namespace AoC.CSharp._2021
             return board;
         }
 
-        private int UnmarkedSum(int[] board)
-        {
-            int sum = 0;
-            for(int i = 0; i < board.Length; ++i)
-                if (board[i] > 0)
-                    sum += board[i];
-
-            return sum;
-        }
-
         IEnumerable<int> CalculateScores(List<int> calledNumbers, List<int[]> boards) =>
             calledNumbers.Select(n => boards
                     .Where(b => !HasWon(b))
                     .Select(b => CallNumber(n, b))
                     .Where(b => HasWon(b))
-                    .Select(b => UnmarkedSum(b) * n))
+                    .Select(b => b.Where(cell => cell > 0).Sum() * n))
                 .SelectMany(_ => _);
 
         public string SolvePart1(string input)
