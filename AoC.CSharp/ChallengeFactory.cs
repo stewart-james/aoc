@@ -15,11 +15,13 @@ namespace AoC.CSharp
                 (2020, 03) => new _2020.Day3(),
                 (2020, 04) => new _2020.Day4(),
                 (2020, 05) => new _2020.Day5(),
+                (2020, 06) => new _2020.Day6(),
                 
                 // 2021
                 (2021, 01) => new _2021.Day1(),
                 (2021, 02) => new _2021.Day2(),
                 (2021, 03) => new _2021.Day3(),
+                (2021, 04) => new _2021.Day4(),
                 
                 _ => throw new ArgumentOutOfRangeException()
             };
