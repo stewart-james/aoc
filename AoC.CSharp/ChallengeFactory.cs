@@ -22,6 +22,7 @@ namespace AoC.CSharp
                 (2021, 02) => new _2021.Day2(),
                 (2021, 03) => new _2021.Day3(),
                 (2021, 04) => new _2021.Day4(),
+                (2021, 05) => new _2021.Day5(),
                 
                 _ => throw new ArgumentOutOfRangeException()
             };
