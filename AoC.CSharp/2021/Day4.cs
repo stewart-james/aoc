@@ -6,7 +6,17 @@ namespace AoC.CSharp._2021
 {
     public class Day4 : IChallenge
     {
-        private bool HasWon(int[] board)
+        public string SolvePart1(string input)
+            => CalculateScores(ParseNumbers(input), ParseBoards(input))
+                .First()
+                .ToString();
+
+        public string SolvePart2(string input)
+            => CalculateScores(ParseNumbers(input), ParseBoards(input))
+                .Last()
+                .ToString();
+        
+        private bool HasWon(List<int> board)
         {
             for (int r = 0; r < 5; ++r)
             {
@@ -35,16 +45,16 @@ namespace AoC.CSharp._2021
             return false;
         }
 
-        private int[] CallNumber(int n, int[] board)
+        private List<int> CallNumber(int n, List<int> board)
         {
-            for(int i = 0; i < board.Length; ++i)
+            for(int i = 0; i < board.Count; ++i)
                 if (board[i] == n)
                     board[i] = -Math.Abs(n);
 
             return board;
         }
 
-        IEnumerable<int> CalculateScores(List<int> calledNumbers, List<int[]> boards) =>
+        IEnumerable<int> CalculateScores(List<int> calledNumbers, List<List<int>> boards) =>
             calledNumbers.Select(n => boards
                     .Where(b => !HasWon(b))
                     .Select(b => CallNumber(n, b))
@@ -52,22 +62,13 @@ namespace AoC.CSharp._2021
                     .Select(b => b.Where(cell => cell > 0).Sum() * n))
                 .SelectMany(_ => _);
 
-        public string SolvePart1(string input)
-            => CalculateScores(ParseNumbers(input), ParseBoards(input))
-                .First()
-                .ToString();
-
-        public string SolvePart2(string input)
-            => CalculateScores(ParseNumbers(input), ParseBoards(input))
-                .Last()
-                .ToString();
         
         private static List<int> ParseNumbers(string input) =>
                 input.Substring(0, input.IndexOf('\n')).Split(",")
                     .Select(int.Parse)
                     .ToList();
         
-        private static List<int[]> ParseBoards(string input)
+        private static List<List<int>> ParseBoards(string input)
         {
             return input.Substring(input.IndexOf('\n'))
                 .Split("\n\n", StringSplitOptions.RemoveEmptyEntries)
@@ -77,7 +78,7 @@ namespace AoC.CSharp._2021
                     .Trim()
                     .Split(" ")
                     .Select(int.Parse))
-                .Select(e => e.ToArray()).ToList();
+                .Select(e => e.ToList()).ToList();
         }
     }
 }
