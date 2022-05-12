@@ -22,9 +22,9 @@ namespace AoC.CSharp._2015
             => (Enumerable
                     .Range(0, input.Length)
                     .Aggregate((currentFloor: 0, idx: -1), 
-                        (agg, index) => agg.Item1 == -1 ? 
+                        (agg, index) => agg.currentFloor == -1 ? 
                             agg : 
-                            (agg.Item1 + (input[index] == Up ? 1 : -1), index))
+                            (agg.currentFloor + (input[index] == Up ? 1 : -1), index))
                     .idx + 1)
                 .ToString();
 
