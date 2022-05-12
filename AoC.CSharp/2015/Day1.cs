@@ -12,10 +12,12 @@ namespace AoC.CSharp._2015
         private const char Up = '(';
 
         // Find out which floor he ends up on, given the Up / Down instructions
+        // O(N)
         public string SolvePart1(string input)
            => CalculateFloor(CountUps(input), input.Length).ToString();
 
         // Find the first instruction that causes him to be in the basement (idx of input)
+        // O(N)
         public string SolvePart2(string input)
             => (Enumerable
                     .Range(0, input.Length)
