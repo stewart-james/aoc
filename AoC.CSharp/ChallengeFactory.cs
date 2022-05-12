@@ -9,6 +9,9 @@ namespace AoC.CSharp
         public IChallenge MakeChallenge(int year, int day)
             => (year, day) switch
             {
+                // 2015
+                (2015, 01) => new _2015.Day1(),
+                
                 // 2020
                 (2020, 01) => new _2020.Day1(),
                 (2020, 02) => new _2020.Day2(),
