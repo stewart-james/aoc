@@ -41,6 +41,7 @@ namespace AoC.CSharp._2015
                 .OrderBy(i => i)
                 .Take(2)
                 .Sum(side => side * 2);
+        
         private static int CalculateBow(List<int> dimensions)
             => dimensions.Aggregate(1, (acc, side) => acc * side);
     }
