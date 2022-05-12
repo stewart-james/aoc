@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AoC.CSharp._2015
@@ -21,12 +22,11 @@ namespace AoC.CSharp._2015
         public string SolvePart2(string input)
             => (Enumerable
                     .Range(0, input.Length)
-                    .Aggregate((currentFloor: 0, idx: -1), 
-                        (agg, index) => agg.currentFloor == -1 ? 
-                            agg : 
-                            (agg.currentFloor + (input[index] == Up ? 1 : -1), index))
-                    .idx + 1)
-                .ToString();
+                    .AggregateEarly((0,-1),
+                        (acc, index) => (acc.Item1 + (input[index] == Up ? 1 : -1), index),
+                        acc => acc.Item1 == -1)
+                    .Item2 + 1
+                ).ToString();
 
         // O(N^2)
         //public string SolvePart2(string input)
@@ -37,5 +37,27 @@ namespace AoC.CSharp._2015
         
         private static int CountUps(string input) => input.Count(c => c == Up);
         private static int CalculateFloor(int upCount, int len) => upCount - (len - upCount);
+    }
+
+    static class AggregateExtension
+    {
+        public static TAccumulate AggregateEarly<TSource, TAccumulate>(
+            this IEnumerable<TSource> source,
+            TAccumulate seed,
+            Func<TAccumulate, TSource, TAccumulate> func,
+            Func<TAccumulate, bool> finished)
+        {
+            TAccumulate accumulate = seed;
+            foreach (var item in source)
+            {
+                accumulate = func(accumulate, item);
+                
+                if (finished(accumulate))
+                    return accumulate;
+            }
+
+            return accumulate;
+        }
+        
     }
 }
