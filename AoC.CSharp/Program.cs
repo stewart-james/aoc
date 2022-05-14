@@ -22,7 +22,7 @@ namespace AoC.CSharp
             } while (!int.TryParse(Console.ReadLine(), out day));
             
             var webClient = new AoCWebClient(args[0]);
-            var content = await webClient.GetInput(year, day);
+            var content = (await webClient.GetInput(year, day)).TrimEnd('\n');
 
             var challenge = new ChallengeFactory().MakeChallenge(year, day);
 
