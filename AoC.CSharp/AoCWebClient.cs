@@ -21,7 +21,7 @@ namespace AoC.CSharp
         public async Task<string> GetInput(int year, int day)
         {
             var cookieContainer = new CookieContainer();
-            using (var handler = new HttpClientHandler() { CookieContainer = cookieContainer })
+            using (var handler = new HttpClientHandler { CookieContainer = cookieContainer })
             {
                 using (var client = new HttpClient(handler) { BaseAddress = _baseAddress})
                 {

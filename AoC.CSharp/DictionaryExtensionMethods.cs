@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq.Expressions;
 
 namespace AoC.CSharp
 {
@@ -10,7 +9,7 @@ namespace AoC.CSharp
             if (dict.TryGetValue(key, out var v))
                 return v;
             
-            return default(TValue);
+            return default;
         }
     }
 }

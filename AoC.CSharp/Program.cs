@@ -8,8 +8,7 @@ namespace AoC.CSharp
     {
         public static async Task Main(string[] args)
         {
-            
-            int year = 2021;
+            int year;
             int day;
 
             do
