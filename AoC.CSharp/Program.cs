@@ -26,15 +26,8 @@ namespace AoC.CSharp
 
             var challenge = new ChallengeFactory().MakeChallenge(year, day);
 
-            try
-            {
-                Console.WriteLine($"Part 1 Solution {challenge.SolvePart1(content)}");
-                Console.WriteLine($"Part 2 Solution {challenge.SolvePart2(content)}");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            Console.WriteLine($"Part 1 Solution {challenge.SolvePart1(content)}");
+            Console.WriteLine($"Part 2 Solution {challenge.SolvePart2(content)}");
         }
     }
 }
